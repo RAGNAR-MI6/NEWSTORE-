@@ -1,97 +1,134 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# StoreAppFinal
 
-# Getting Started
+A cross-platform mobile store application built with React Native. This app allows users to browse products, add items to a cart, and place orders. It is designed for both Android and iOS platforms.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## Features
+- Browse products on the home screen
+- Add/remove items from the cart
+- View cart and order confirmation screens
+- State management with Redux
+- Modern UI and smooth navigation
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+---
 
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+## Project Structure
+```
+StoreAppFinal/
+├── __tests__/                  # Test files
+├── android/                    # Android native project
+│   └── app/
+│       ├── build.gradle        # App-level Gradle config
+│       └── ...
+├── ios/                        # iOS native project
+│   └── StoreAppFinal/
+│       └── ...
+├── redux/                      # Redux store and slices
+│   ├── cartSlice.js
+│   └── store.js
+├── screens/                    # App screens
+│   ├── CartScreen.js
+│   ├── HomeScreen.js
+│   └── OrderConfirmationScreen.js
+├── App.tsx                     # Main app entry (TypeScript)
+├── index.js                    # Entry point
+├── package.json                # NPM dependencies
+├── README.md                   # Project documentation
+└── ...
 ```
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Getting Started
 
-### Android
+### Prerequisites
+- Node.js (v14 or newer recommended)
+- npm or yarn
+- Java JDK 11 or 17 (for Android build)
+- Android Studio (for Android SDK)
+- Xcode (for iOS, macOS only)
 
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone <repo-url>
+   cd StoreAppFinal
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
+3. Install pods for iOS (macOS only):
+   ```sh
+   cd ios
+   pod install
+   cd ..
+   ```
+
+---
+
+## Running the App
+
+### Android (Debug)
 ```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+npx react-native run-android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
+### iOS (Debug, macOS only)
 ```sh
-bundle install
+npx react-native run-ios
 ```
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
-```
+## Building a Release APK (Android)
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+1. **Generate a Keystore** (if you don't have one):
+   ```sh
+   keytool -genkeypair -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+   ```
+   Place `my-release-key.keystore` in `android/app/`.
 
-```sh
-# Using npm
-npm run ios
+2. **Configure `android/gradle.properties`:**
+   Add the following lines (replace with your values):
+   ```
+   MYAPP_UPLOAD_STORE_FILE=my-release-key.keystore
+   MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
+   MYAPP_UPLOAD_STORE_PASSWORD=your-store-password
+   MYAPP_UPLOAD_KEY_PASSWORD=your-key-password
+   ```
 
-# OR using Yarn
-yarn ios
-```
+3. **Configure signing in `android/app/build.gradle`:**
+   Ensure the `signingConfigs` and `buildTypes` blocks are set up for release builds.
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+4. **Build the APK:**
+   ```sh
+   cd android
+   .\gradlew assembleRelease
+   ```
+   The APK will be generated at:
+   ```
+   android/app/build/outputs/apk/release/app-release.apk
+   ```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+## Troubleshooting
+- **Gradle errors:**
+  - Ensure there is no `android { ... }` block in `android/build.gradle` (should only be in `android/app/build.gradle`).
+  - Make sure all required environment variables (`JAVA_HOME`, `ANDROID_HOME`) are set.
+- **Metro bundler issues:**
+  - Restart the bundler: `npx react-native start --reset-cache`
+- **Dependency issues:**
+  - Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+- **Android build fails:**
+  - Check for correct keystore setup and signing configuration.
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## License
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is for educational purposes. Add your license here if needed.

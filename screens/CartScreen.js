@@ -13,6 +13,7 @@ const CartScreen = ({ navigation }) => {
     dispatch(clearCart());
     navigation.navigate('OrderConfirmation');
   };
+  
 
   if (cartItems.length === 0) {
     return (
