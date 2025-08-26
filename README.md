@@ -129,6 +129,3 @@ npx react-native run-ios
 
 ---
 
-## License
-
-This project is for educational purposes. Add your license here if needed.
